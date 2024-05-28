@@ -1,10 +1,19 @@
 using ContainerShip;
+using System.Diagnostics;
 
 namespace TestShip
 {
     [TestClass]
     public class ProgramTest
     {
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            // Run the app once for visualisation
+            Ship ship = RandomValidShip();
+            Debug.WriteLine($"https://i872272.luna.fhict.nl/ContainerVisualizer/index.html?length={ship.Length}&width={ship.Width}&stacks={string.Join("/", ship.Rows.Select(r => string.Join(",", r.Stacks.Select(s => string.Join("-", s.Containers.Select(c => 1 + (c.IsValuable?1:0) + 2*(c.IsCooled?1:0)))))))}&weights={string.Join("/", ship.Rows.Select(r => string.Join(",", r.Stacks.Select(s => string.Join("-", s.Containers.Select(c => c.Weight))))))}");
+        }
+
         [TestMethod]
         public void TestMaxWeightOnContainer()
         {
